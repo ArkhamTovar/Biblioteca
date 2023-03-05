@@ -85,17 +85,83 @@ def ReportePorAutor():
     except:
         pass
 
+#Funcion busqueda por genero
+def ReportePorGenero():
+    print()
+    print("*******Reporte por genero******")
+    
+    #Muestra todos los autores de libros sin repetirlos
+    generos=list()
+    for libro in libros.values():
+        generos.append(libro[2])
+        for genero in generos:
+            if generos.count(genero)>1:
+                generos.remove(genero)
+    print("---GENEROS DISPONIBLES----")
+    for genero in generos:
+        print(f"-{genero}")
+    
+    #Consulta
+    genero=input("Ingrese el nombre del autor: ")
+    generoBuscado=genero.upper()
+    try:
+        print()
+        print("TITULO | AUTOR | GENERO | AÑO PUBLICACION | ISBN | AÑO ADQUISICION")
+        for libro in libros.values():
+            if libro[2]==generoBuscado:
+                print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+    except:
+        pass
+
+#Funcion busqueda por año
+def ReportePorAño():
+    print()
+    print("*******Reporte por año de publicacion******")
+    
+    #Muestra todos los autores de libros sin repetirlos
+    años=list()
+    for libro in libros.values():
+        años.append(libro[3])
+        for año in años:
+            if años.count(año)>1:
+                años.remove(año)
+    print("---GENEROS DISPONIBLES----")
+    for año in años:
+        print(f"-{año}")
+
+    #Consulta
+    año=input("Ingrese el nombre del autor: ")
+    añoBuscado=año.upper()
+    try:
+        print()
+        print("TITULO | AUTOR | GENERO | AÑO PUBLICACION | ISBN | AÑO ADQUISICION")
+        for libro in libros.values():
+            if libro[3]==añoBuscado:
+                print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+    except:
+        pass
+
 # Sub menu de Reportes
 def Reportes():
-    print()
-    print("*****Reportes*****")
-    print("*1* Catalago completo")
-    print("*2* Reporte por autor")
-    eleccion=int(input("Selecciona una opcion: "))
-    if eleccion==1:
-        MostrarCatalagoCompleto()
-    if eleccion==2:
-        ReportePorAutor()
+    while True:
+        print()
+        print("*****Reportes*****")
+        print("*1* Catalago completo")
+        print("*2* Reporte por autor")
+        print('*3* Reporte por genero')
+        print('*4* Reporte por año de publicacion')
+        print('*5* Regresar al menu anterior')
+        eleccion=int(input("Selecciona una opcion: "))
+        if eleccion==1:
+            MostrarCatalagoCompleto()
+        if eleccion==2:
+            ReportePorAutor()
+        if eleccion==3:
+            ReportePorGenero()
+        if eleccion==4:
+            ReportePorAño()
+        if eleccion==5:
+            break
 
 
 
