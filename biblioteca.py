@@ -102,7 +102,7 @@ def ReportePorGenero():
         print(f"-{genero}")
     
     #Consulta
-    genero=input("Ingrese el nombre del autor: ")
+    genero=input("Ingrese el genero: ")
     generoBuscado=genero.upper()
     try:
         print()
@@ -130,7 +130,7 @@ def ReportePorAño():
         print(f"-{año}")
 
     #Consulta
-    año=input("Ingrese el nombre del autor: ")
+    año=input("Ingrese el año: ")
     añoBuscado=año.upper()
     try:
         print()
