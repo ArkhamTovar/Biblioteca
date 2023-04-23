@@ -1,5 +1,27 @@
+#importacion de libreria de os para mostrar la direccion de guardado del archivo CSV
+import os
+
+#importacion de libreria CSV
+import csv
+
 #Diccionario en el que se almacenaran los libros
 libros=dict()
+
+#Se verifica la existencia de un archvo previo, si es asi se carga, en caso contrario se crea uno
+try:
+    with open("libros.csv",'r', newline="") as archivo:
+            lector = csv.reader(archivo)
+            next(lector)
+            for identificador,titulo,autor, genero,añoPublic,isbn,fechaAdqui in lector:
+                libros[int(identificador)]=(titulo,autor,genero,añoPublic,isbn,fechaAdqui)
+except:
+    print()
+    print('No se ha encontrado ningun archivo previo de guardado')
+    print('*SE HA GENERADO UN ARCHIVO CSV EN BLANCO*')
+    archivo = open("libros.csv","w", newline="")
+    grabador = csv.writer(archivo)
+    grabador.writerow(("Identificador", "titulo", "autor",'genero','año publicacion',"isbn",'fecha adquisicion'))
+    archivo.close()
 
 def RegistrarNuevoEjempar():
     while True:
@@ -35,6 +57,8 @@ def RegistrarNuevoEjempar():
         
         #Lista ejemplar guardada en el diccionario de "libros"
         libros[identificador]=ejemplar
+
+        
         
         
         agregar=input("Desea agregar otro libro? [S/N]: ")
@@ -43,6 +67,12 @@ def RegistrarNuevoEjempar():
         if agregar=="S":
             pass
         elif agregar=="N":
+            archivo = open("libros.csv","w", newline="")
+            grabador = csv.writer(archivo)
+            grabador.writerow(('identificador','titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
+            grabador.writerows([(identificador, datos[0],datos[1],datos[2],datos[3],datos[4],datos[5])for identificador, datos in libros.items()])
+            archivo.close()
+
             break
         else:
             print("opcion no valida")
@@ -134,10 +164,20 @@ def ReportePorAño():
     añoBuscado=año.upper()
     try:
         print()
+        reporte_año=list()
         print("TITULO | AUTOR | GENERO | AÑO PUBLICACION | ISBN | AÑO ADQUISICION")
         for libro in libros.values():
             if libro[3]==añoBuscado:
-                print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+                reporte_año=(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+                print(reporte_año)
+                reporte_año.append(libro[0],libro[1],libro[2],libro[3],libro[4],libro[5])
+        opcion=input("Desea exportar este reporte en un CSV? [S/N]: ")
+        if opcion=="s":
+            archivo = open("Reporte año.csv","w", newline="")
+            grabador = csv.writer(archivo)
+            grabador.writerow(('titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
+            grabador.writerows([reporte_año])
+            archivo.close()
     except:
         pass
 
