@@ -85,6 +85,15 @@ def MostrarCatalagoCompleto():
     print("TITULO | AUTOR | GENERO | AÑO PUBLICACION | ISBN | AÑO ADQUISICION")
     for libro in libros.values(): #Busqueda de los datos por medio de pocisiones en la lista
         print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+    opcion=input("Desea exportar este reporte en un CSV? [S/N]: ")
+    if opcion=="s":
+        archivo = open("Reporte ejemplares existentes.csv","w", newline="")
+        grabador = csv.writer(archivo)
+        grabador.writerow(('titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
+        grabador.writerows([libro[0],libro[1],libro[2],libro[3],libro[4],libro[5]]for libro in libros.values())
+        archivo.close()
+    if opcion=="n":
+        pass
 
 #Funcion debusqueda por autor
 def ReportePorAutor():
@@ -112,6 +121,13 @@ def ReportePorAutor():
         for libro in libros.values():
             if libro[1]==autorBuscado:
                 print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+        opcion=input("Desea exportar este reporte en un CSV? [S/N]: ")
+        if opcion=="s":
+            archivo = open("Reporte autores.csv","w", newline="")
+            grabador = csv.writer(archivo)
+            grabador.writerow(('titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
+            grabador.writerows([libro[0],libro[1],libro[2],libro[3],libro[4],libro[5]]for libro in libros.values() if libro[1]==autorBuscado)
+            archivo.close()
     except:
         pass
 
@@ -140,6 +156,13 @@ def ReportePorGenero():
         for libro in libros.values():
             if libro[2]==generoBuscado:
                 print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
+        opcion=input("Desea exportar este reporte en un CSV? [S/N]: ")
+        if opcion=="s":
+            archivo = open("Reporte generos.csv","w", newline="")
+            grabador = csv.writer(archivo)
+            grabador.writerow(('titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
+            grabador.writerows([libro[0],libro[1],libro[2],libro[3],libro[4],libro[5]]for libro in libros.values() if libro[2]==generoBuscado)
+            archivo.close()
     except:
         pass
 
@@ -164,19 +187,16 @@ def ReportePorAño():
     añoBuscado=año.upper()
     try:
         print()
-        reporte_año=list()
         print("TITULO | AUTOR | GENERO | AÑO PUBLICACION | ISBN | AÑO ADQUISICION")
         for libro in libros.values():
             if libro[3]==añoBuscado:
-                reporte_año=(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
-                print(reporte_año)
-                reporte_año.append(libro[0],libro[1],libro[2],libro[3],libro[4],libro[5])
+                print(f"{libro[0]} | {libro[1]} | {libro[2]} | {libro[3]} | {libro[4]} | {libro[5]}")
         opcion=input("Desea exportar este reporte en un CSV? [S/N]: ")
         if opcion=="s":
             archivo = open("Reporte año.csv","w", newline="")
             grabador = csv.writer(archivo)
             grabador.writerow(('titulo','autor','genero','año publicacion','isbn','fecha adquisicion'))
-            grabador.writerows([reporte_año])
+            grabador.writerows([libro[0],libro[1],libro[2],libro[3],libro[4],libro[5]]for libro in libros.values() if libro[3]==añoBuscado)
             archivo.close()
     except:
         pass
